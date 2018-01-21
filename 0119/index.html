@@ -7,49 +7,104 @@
     <title>Document</title>
 </head>
 <body>
-    <script>
-        // var n = 105;
-        // var summ =0;
-        // for(var i = 0; i <= n; i++) {
-        //     summ += i;
-        // }
-        // console.log('Сумма чисел от 0 до', n, '=', summ);
-        
-        
-        
-        
-        
-        
-        
-        
-        // var summNumber = 0;
-        
-        // var answer = prompt("Введите число");
-        // for(i = 0; i < answer.length; i++){
-        //     summNumber += +answer[i];
-        // }
-        // console.log('Сумма чисел способом перебора строки как массива =',summNumber);
-        
-        
-        
-        
-        
-        
-        // var number = +answer,
-        // summNumber2 = 0;
-        
-        // while(number){
-        //     summNumber2 += (number % 10);
-        //     number = (number - (number % 10)) / 10;
-        // }
-        
-        //  console.log('Сумма чисел способом через деление =', summNumber2);
-        
-        
-        
-        
-        
-        
-    </script>
+<script>
+	 var n = 105;
+	 var summ =0;
+	 for(var i = 0; i <= n; i++) {
+	     summ += i;
+	 }
+	 console.log('Сумма чисел от 0 до', n, '=', summ);
+
+
+	//----------------------------------------------------------------------------------------------------------
+
+
+	 var summNumber = 0;
+
+	 var answer = prompt("Введите число");
+	 for(i = 0; i < answer.length; i++){
+	     summNumber += +answer[i];
+	 }
+	 console.log('Сумма чисел способом перебора строки как массива =',summNumber);
+
+
+	//----------------------------------------------------------------------------------------------------------
+
+
+	 var number = +answer,
+	 summNumber2 = 0;
+
+	 while(number){
+	     summNumber2 += (number % 10);
+	     number = (number - (number % 10)) / 10;
+	 }
+
+	  console.log('Сумма чисел способом через деление =', summNumber2);
+
+
+	//Решение квадратных уравнений------------------------------------------------------------------------------
+
+
+		function quadraticEquation(a, b, c) {
+			D = b * b - 4 * a * c;
+			console.log('Дискрименант: ' + D);
+			if (D > 0) {
+				return 'два корня x1 = ' + (-b - Math.sqrt(D)) / (2 * a) + ', x2 = ' + (-b + Math.sqrt(D)) / (2 * a);
+			} else if (D === 0) {
+				return 'корень один x1 = x2 = ' + (-b / (2 * a));
+			} else {
+				return 'Корней нет';
+			}
+		}
+
+		console.log(quadraticEquation(2, 4, 1));
+
+
+	//Домашнее задание из конспекта-----------------------------------------------------------------------------
+
+
+	function form() {
+		var ansver = 'Ваше ФИО: ';
+		while (true) {
+			var lastName = prompt('Введите вашу фамилию');
+			if (lastName !== null && lastName !== '') {
+				break;
+			}
+		}
+		ansver += lastName + ' ';
+		while (true) {
+			var name = prompt('Введите имя');
+			if (name !== null && name !== '') {
+				break;
+			}
+		}
+		ansver += name + ' ';
+		while (true) {
+			var nameF = prompt('Введите ваше отчество');
+			if (nameF !== null && nameF !== '') {
+				break;
+			}
+		}
+		ansver += nameF + ' ';
+		while (true) {
+			var userAge = prompt('Укажите ваш возраст');
+			if (userAge !== null && userAge !== '' && !!+userAge) {
+				break;
+			}
+		}
+		ansver += '\nВаш возраст в годах: ' + userAge + '\nВаш возраст в днях: ' + Math.round(+userAge * 365 + +userAge / 4) + '\nЧерез 5 лет вам будет: ' + (+userAge + 5) + '\nВаш пол: ';
+		if(confirm('Ваш пол - мужской?')){
+			ansver += 'Мужской';
+        }else{
+			ansver += 'Женский';
+        }
+		ansver += '\nВы на пенсии: ';
+		ansver += +userAge > 65 ? 'да' : 'нет';
+
+		return ansver;
+	}
+    alert(form());
+
+</script>
 </body>
 </html>
