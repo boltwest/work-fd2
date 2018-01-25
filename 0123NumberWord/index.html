@@ -2,134 +2,135 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>NumberWord</title>
+    <meta charset="UTF-8">
+    <title>NumberWord</title>
 </head>
 
 <body>
-	<script>
-		function SummNumber(numb) {
-			var remainder = numb % 10;
-			if (!numb) {
-				return 0;
-			}
-			return remainder + SummNumber(Math.floor(numb / 10));
+<script>
+	function SummNumber(numb) {
+		var remainder = numb % 10;
+		if (!numb) {
+			return 0;
 		}
-		console.log(SummNumber(197));
+		return remainder + SummNumber(Math.floor(numb / 10));
+	}
 
-		function numberToString(number) {
-			var string = 'Прописью : ';
-			var names = [];
-			names[1] = 'один';
-			names[2] = 'два';
-			names[3] = 'три';
-			names[4] = 'четыре';
-			names[5] = 'пять';
-			names[6] = 'шесть';
-			names[7] = 'семь';
-			names[8] = 'восемь';
-			names[9] = 'девять';
-			names[10] = 'десять';
-			names[11] = 'одиннадцать';
-			names[12] = 'двенадцать';
-			names[13] = 'тринадцать';
-			names[14] = 'четырнадцать';
-			names[15] = 'пятнадцать';
-			names[16] = 'шестнадцать';
-			names[17] = 'семнадцать';
-			names[18] = 'восемнадцать';
-			names[19] = 'девятнадцать';
-			names[20] = 'двадцать';
-			names[30] = 'тридцать';
-			names[40] = 'сорок';
-			names[50] = 'пятьдесят';
-			names[60] = 'шестьдесят';
-			names[70] = 'семьдесят';
-			names[80] = 'восемьдесят';
-			names[90] = 'девяносто';
-			names[100] = 'сто';
-			names[200] = 'двести';
-			names[300] = 'триста';
-			names[400] = 'четыреста';
-			names[500] = 'пятьсот';
-			names[600] = 'шестьсот';
-			names[700] = 'семьсот';
-			names[800] = 'восемьсот';
-			names[900] = 'девятьсот';
-			var prefex = [];
-			prefex[0] = ['миллион ', 'миллиона ', 'миллионов '];
-			prefex[1] = ['тысяча ', 'тысячи ', 'тысяч '];
+	console.log(SummNumber(197));
+
+	function numberToString(number) {
+		var string = 'Прописью : ';
+		var names = [];
+		names[1] = 'один';
+		names[2] = 'два';
+		names[3] = 'три';
+		names[4] = 'четыре';
+		names[5] = 'пять';
+		names[6] = 'шесть';
+		names[7] = 'семь';
+		names[8] = 'восемь';
+		names[9] = 'девять';
+		names[10] = 'десять';
+		names[11] = 'одиннадцать';
+		names[12] = 'двенадцать';
+		names[13] = 'тринадцать';
+		names[14] = 'четырнадцать';
+		names[15] = 'пятнадцать';
+		names[16] = 'шестнадцать';
+		names[17] = 'семнадцать';
+		names[18] = 'восемнадцать';
+		names[19] = 'девятнадцать';
+		names[20] = 'двадцать';
+		names[30] = 'тридцать';
+		names[40] = 'сорок';
+		names[50] = 'пятьдесят';
+		names[60] = 'шестьдесят';
+		names[70] = 'семьдесят';
+		names[80] = 'восемьдесят';
+		names[90] = 'девяносто';
+		names[100] = 'сто';
+		names[200] = 'двести';
+		names[300] = 'триста';
+		names[400] = 'четыреста';
+		names[500] = 'пятьсот';
+		names[600] = 'шестьсот';
+		names[700] = 'семьсот';
+		names[800] = 'восемьсот';
+		names[900] = 'девятьсот';
+		var prefex = [];
+		prefex[0] = ['миллион ', 'миллиона ', 'миллионов '];
+		prefex[1] = ['тысяча ', 'тысячи ', 'тысяч '];
 
 
-			function numberOnArray(number) {
-				var numberArray = [
-					[],
-					[],
-					[]
-				];
-				var remainder;
-				var count = 0;
-				while (number) {
-					remainder = number % 1000;
-					numberArray[count][2] = remainder % 10;
-					numberArray[count][1] = remainder % 100 - numberArray[count][2];
-					numberArray[count][0] = remainder - numberArray[count][2] - numberArray[count][1];
-					number = Math.floor(number / 1000);
-					count++;
+		function numberOnArray(number) {
+			var numberArray = [
+				[],
+				[],
+				[]
+			];
+			var remainder;
+			var count = 0;
+			while (number) {
+				remainder = number % 1000;
+				numberArray[count][2] = remainder % 10;
+				numberArray[count][1] = remainder % 100 - numberArray[count][2];
+				numberArray[count][0] = remainder - numberArray[count][2] - numberArray[count][1];
+				number = Math.floor(number / 1000);
+				count++;
+			}
+			return numberArray.reverse();
+		}
+
+		function transformNuberTousendInString(array) {
+			var str = '';
+			for (var i = 0; i < 3; i++) {
+				if (array[i] === 0) {
+					continue;
 				}
-				return numberArray.reverse();
-			}
-
-			function transformNuberTousendInString(array) {
-				var str = '';
-				for (var i = 0; i < 3; i++) {
-					if (array[i] === 0) {
-						continue;
-					}
-					if (i === 1 && array[1] === 10) {
-						str += names[array[i] + array[i + 1]] + ' ';
-						break;
-					}
-					str += names[array[i]] + ' ';
+				if (i === 1 && array[1] === 10) {
+					str += names[array[i] + array[i + 1]] + ' ';
+					break;
 				}
-				return str;
+				str += names[array[i]] + ' ';
 			}
+			return str;
+		}
 
-			function stringTousendPrefex(i, prefex) {
-				string += transformNuberTousendInString(numberArrays[i]);
-				var number = numberArrays[i][2];
-				if (number === 1) string += prefex[0];
-				else if (number > 1 && number < 5) string += prefex[1];
-				else string += prefex[2];
-			}
+		function stringTousendPrefex(i, prefex) {
+			string += transformNuberTousendInString(numberArrays[i]);
+			var number = numberArrays[i][2];
+			if (number === 1) string += prefex[0];
+			else if (number > 1 && number < 5) string += prefex[1];
+			else string += prefex[2];
+		}
 
-			if (number === 0) {
-				string += 'ноль';
-				return string;
-			}
-
-			var numberArrays = numberOnArray(number);
-
-			if (numberArrays[0][2]) {
-				stringTousendPrefex(0, prefex[0]);
-			}
-			if (numberArrays[1][2]) {
-				stringTousendPrefex(1, prefex[1]);
-			}
-			if (numberArrays[2][2]) {
-				string += transformNuberTousendInString(numberArrays[2]);
-			}
-
+		if (number === 0) {
+			string += 'ноль';
 			return string;
 		}
 
+		var numberArrays = numberOnArray(number);
 
-		var userAnsver = prompt('Укажите число от 0 до 999 999 999', '305437819');
-		if (userAnsver !== null && userAnsver !== '') {
-			userAnsver = Number(userAnsver);
-			alert('Ваше число ' + userAnsver + '\n' + numberToString(userAnsver));
+		if (numberArrays[0][2]) {
+			stringTousendPrefex(0, prefex[0]);
 		}
-	</script>
+		if (numberArrays[1][2]) {
+			stringTousendPrefex(1, prefex[1]);
+		}
+		if (numberArrays[2][2]) {
+			string += transformNuberTousendInString(numberArrays[2]);
+		}
+
+		return string;
+	}
+
+
+	var userAnsver = prompt('Укажите число от 0 до 999 999 999', '305437819');
+	if (userAnsver !== null && userAnsver !== '') {
+		userAnsver = Number(userAnsver);
+		alert('Ваше число ' + userAnsver + '\n' + numberToString(userAnsver));
+	}
+</script>
 </body>
 
 </html>
