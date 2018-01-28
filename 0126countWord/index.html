@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Count Word</title>
+</head>
+<body>
+    <script>
+        var words = ['слово', 'Строка', 'словарный', 'плохо', 'невозможно', 'тут', 'арбуз', 'плохо', 'невозможно', 'тут', 'слово', 'словарный', 'тут', 'единственный', 'один', 'тут'];
+        
+        
+        var countW = countWord(words);
+        console.log(countW);
+        
+        function countWord (arr) {
+            
+            var count = {};
+            
+            arr.forEach(function(item) {
+                item = item.toLowerCase();
+                if(count[item]) {
+                    count[item]++;
+                }
+                if(!count[item]){
+                    count[item] = 1;
+                }
+            })
+            
+            return count;
+        }
+        
+        
+        
+    </script>
+</body>
+</html>
