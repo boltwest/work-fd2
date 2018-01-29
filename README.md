@@ -1,4 +1,26 @@
 <h1>Выполнение работ fd2</h1>
 
-<!--https://javascript.ru/forum/misc/40642-summa-propisyu.html-->
-<!--https://garazh.biz/javascript/text-sum/-->
+Object.entries()
+Object.values()
+Object.keys()
+
+
+
+
+
+
+
+
+
+
+
+
+for(arr){
+    if(compare){
+        .push
+    }
+}
+
+arr.filter(function(i){
+  return compare[i];  
+})
