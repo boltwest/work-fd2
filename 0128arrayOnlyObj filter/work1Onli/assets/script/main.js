@@ -1,109 +1,44 @@
-var arr = [{ g: 1 }, { a: 2 }, { a: 2 }, { b: 2 }, { c: 1, a: 5 }, { d: 1 }, { d: 1, b: 1 }, { a: 1 }, { b: 2 }, { d: 1, b: 1 }, { b: 2 }];
-var arr1 = [{ g: 1 }, { a: 2 }, { a: 2 }, { a: 1, b: 2 }];
+var arr = [{g: 1}, {a: 2}, {a: 2}, {b: 2}, {c: 1, a: 5}, {d: 1}, {d: 1, b: 1}, {a: 1}, {b: 2}, {d: 1, b: 1}, {b: 2}];
+var arr1 = [{g: 1}, {a: 2}, {a: 2}, {a: 1, b: 2}];
+var arr2 = [];
 
-checkedObject(arr1[0], arr1[1]);
+console.log(filterUniqueObject(arr));
 
-function checkedObject (obj1, obj2) {
-	
-	console.log(Object.keys(obj1).length);
-	console.log(Object.keys(obj2).length);
-	
-	if(Object.keys(obj1).length === Object.keys(obj2).length) {
-		
-	}
-	return false;
-}
+console.log(arr);
 
+function filterUniqueObject(array) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//uniqueObject(arr1);
-
-
-function uniqueObject(array) {
-
-	if (!array.length) {
+	if ( !array.length ) {
 		return null;
 	}
 
 	var ansver = [array[0]];
-	//console.log(Object.keys(array[3]));
+	var flag = true;
 
-	array.forEach(function(obj) {
+	array.forEach(function (obj) {
+		for ( var i = 0; i < ansver.length; i++ ) {
+			if ( (checkedObject(obj, ansver[i])) ) {
+				flag = false;
+			}
+		}
+		if ( flag ) {
+			ansver.push(obj)
+		} else {
+			flag = true;
+		}
+	})
 
-		if (Object.keys(obj).length === 1) {
-			for (var key in obj) {
-				for (var i = 0; i < ansver.length; i++) {
-					if ((key in ansver[i])) {
-						break;
-					}
-					else {
-						ansver.push(obj);
-					}
+	function checkedObject(obj1, obj2) {
+
+		if ( Object.keys(obj1).length === Object.keys(obj2).length ) {
+			for ( var key in obj1 ) {
+				if ( obj2[key] && obj1[key] === obj2[key] ) {
+					return true;
 				}
 			}
-
 		}
-
-
-
-
-
-	})
-	console.log(ansver);
-}
-
-
-
-
-
-
-
-
-//      пример с доски задание номер 2
-
-function compareObject(obja,  objb) {
-	for(var key in objb){
-		if( !(key in obja) || (objb[key] !== obja[key])) {
-			return false;
-		}
+		return false;
 	}
-	return true;
+
+	return ansver;
 }
-
-function grtFinalArr (arr, obj){
-	return arr.filter(function(item){
-		return compareObject(item, obj);
-	})
-}
-
-
