@@ -12,17 +12,17 @@ function show(arr) {
 
 var wrapper = bind(show, obj, arrNumbers);
 
-wrapper([5, 6]);
+wrapper(5, 6);
 
 
 
 function bind(func, context, arrays) {
-	return function (arr) {
-		if(!arr) {
-			func.apply(context, [arrays]);
-		}else {
-			func.apply(context, [arrays.concat(arr)]);
+	return function () {
+		let argArr = [].slice.call(arguments);
+		if(!argArr.length) {
+			return func.apply(context, [arrays]);
 		}
+		return func.apply(context, [arrays.concat(argArr)]);
+		
 	};
 }
-
