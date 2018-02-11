@@ -1,4 +1,4 @@
-function Shape() {  //создали первый класс
+function Shape() {
 
 	var name = 'Фигура';
 
@@ -7,13 +7,13 @@ function Shape() {  //создали первый класс
 	}
 }
 
-function Rectangle(argA, argB) { //создали второй класс
-	Shape.call(this);            //во втором вызвали первый, тем самым наследовали его
+function Rectangle(argA, argB) {
+	Shape.call(this);
 
-	var getName = this.getName;         // записываем метод в переменную
-	this.getName = function () {        // перезаписывем новый метод
-		var name = getName();           // в новом методе вызываем старый
-		return name + ' прямоугольник'  // в новом добовляем действие
+	var getName = this.getName;
+	this.getName = function () {
+		var name = getName();
+		return name + ' прямоугольник'
 	}
 
 	this._a = argA;
@@ -44,8 +44,8 @@ function Rectangle(argA, argB) { //создали второй класс
 	}
 }
 
-function Square(argA) {      // создали третий класс
-	Rectangle.call(this);    // наследовали второй
+function Square(argA) {
+	Rectangle.call(this);
 
 	this._a = argA;
 	this._b = argA;

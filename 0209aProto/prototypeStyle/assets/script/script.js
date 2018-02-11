@@ -1,20 +1,20 @@
-function Shape() {  //создали первый класс
+function Shape() {
 	this._name = 'Фигура';
 }
-Shape.prototype.getName = function () {    // присвоим в __proto__ метод
+Shape.prototype.getName = function () {
 	return this._name;
 }
 
 
 
-function Rectangle(argA, argB) {//создали второй класс
+function Rectangle(argA, argB) {
 	Shape.call(this);
 	this._a = argA;
 	this._b = argB;
 }
-Rectangle.prototype = Object.create(Shape.prototype); // Создаем обьект для прототипного наследования
+Rectangle.prototype = Object.create(Shape.prototype);
 Rectangle.prototype.constructor = Rectangle;
-Rectangle.prototype.getName = function () {                  //расширяем функционал метода
+Rectangle.prototype.getName = function () {
 	return Shape.prototype.getName.apply(this, arguments) + ' прямоугольник';
 }
 Rectangle.prototype.setA = function (arg) {
@@ -38,12 +38,12 @@ Rectangle.prototype.getPerimeter = function () {
 
 
 
-function Square(argA) {     // создали третий класс
+function Square(argA) {
 	Rectangle.call(this, argA, argA);
 }
-Square.prototype = Object.create(Rectangle.prototype);   // наследование
+Square.prototype = Object.create(Rectangle.prototype);
 Square.prototype.constructor = Square;
-Square.prototype.getName = function () {   //расширяем метод
+Square.prototype.getName = function () {
 	return Shape.prototype.getName.apply(this, arguments) + ' квадрат';
 }
 Square.prototype.setA = function (arg) {
