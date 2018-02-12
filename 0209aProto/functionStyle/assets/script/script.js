@@ -9,15 +9,15 @@ function Shape() {
 
 function Rectangle(argA, argB) {
 	Shape.call(this);
+	
+	this._a = argA;
+	this._b = argB;
 
 	var getName = this.getName;
 	this.getName = function () {
 		var name = getName();
 		return name + ' прямоугольник'
 	}
-
-	this._a = argA;
-	this._b = argB;
 
 	this.setA = function (arg) {
 		this._a = arg;
