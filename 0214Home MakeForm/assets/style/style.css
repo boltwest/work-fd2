@@ -1,0 +1,23 @@
+.input{
+    position: absolute;
+    left: 170px;
+}
+.inputLong{
+    width: 454px;
+}
+.inputSmall{
+    width: 84px;
+}
+.inputShort{
+    width: 200px;
+}
+.lable{
+    position: relative;
+    display: block;
+    margin: 3px;
+}
+.inputTextarea{
+    display: block;
+    width: 620px;
+    height: 50px;
+}
