@@ -32,10 +32,10 @@ var formDef2 =
 var action = "http://fe.it-academy.by/TestForm.php";
 
 
-document.body.appendChild(makeForm(action, formDef1));
+document.body.appendChild(createForm(action, formDef2));
 
 
-function makeForm(action, arr, name = 'form') {
+function createForm(action, arr, name = 'form') {
 
 	var form = document.createElement('form');
 	form.setAttribute('action', action);
@@ -105,32 +105,3 @@ function makeForm(action, arr, name = 'form') {
 	console.log(form);
 	return form;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
