@@ -32,7 +32,7 @@ var formDef2 =
 var action = "http://fe.it-academy.by/TestForm.php";
 
 
-document.body.appendChild(createForm(action, formDef2));
+document.body.appendChild(createForm(action, formDef1));
 
 
 function createForm(action, arr, name = 'form') {
@@ -42,7 +42,6 @@ function createForm(action, arr, name = 'form') {
 	form.setAttribute('name', name);
 	form.setAttribute('target', '_blank');
 	form.setAttribute('method', 'post');
-	form.setAttribute('style', 'position: relative');
 
 	arr.forEach(function (objectProp) {
 		switch (objectProp.kind){
@@ -55,19 +54,34 @@ function createForm(action, arr, name = 'form') {
 			case 'submit':
 				form.appendChild(makeElementSubmit(objectProp));
 				break;
+			case 'shorttext':
+				form.appendChild(makeElementShortText(objectProp));
+				break;
+			case 'combo':
+				form.appendChild(makeElementCombo(objectProp));
+				break;
+			case 'radio':
+				form.appendChild(makeElementRadio(objectProp));
+				break;
+			case 'check':
+				form.appendChild(makeElementCheck(objectProp));
+				break;
+			case 'memo':
+				form.appendChild(makeElementMemo(objectProp));
+				break;
 		}
 	});
 
 	function makeElementLongText(obj) {
 		var element = document.createElement('lable');
-		element.setAttribute('style', 'display: block; margin: 3px')
+		element.classList.add('lable');
 		var nodeTextLable = document.createTextNode(obj.label);
 		var nodeElement = document.createElement('input');
 		nodeElement.setAttribute('type', 'text');
 		nodeElement.setAttribute('name', obj.name);
 		nodeElement.setAttribute('placeholder', obj.label);
-		nodeElement.setAttribute('style', 'position: absolute; left: 150px');
-		nodeElement.setAttribute('size', '50');
+		nodeElement.classList.add('input');
+		nodeElement.classList.add('inputLong');
 
 		element.appendChild(nodeTextLable);
 		element.appendChild(nodeElement);
@@ -75,13 +89,14 @@ function createForm(action, arr, name = 'form') {
 	}
 	function makeElementNumber(obj) {
 		var element = document.createElement('lable');
-		element.setAttribute('style', 'display: block; margin: 3px')
+		element.classList.add('lable');
 		var nodeTextLable = document.createTextNode(obj.label);
 		var nodeElement = document.createElement('input');
 		nodeElement.setAttribute('type', 'number');
 		nodeElement.setAttribute('name', obj.name);
 		nodeElement.setAttribute('placeholder', obj.label);
-		nodeElement.setAttribute('style', 'position: absolute; left: 150px');
+		nodeElement.classList.add('input');
+		nodeElement.classList.add('inputSmall');
 
 		element.appendChild(nodeTextLable);
 		element.appendChild(nodeElement);
@@ -97,11 +112,101 @@ function createForm(action, arr, name = 'form') {
 
 		return element;
 	}
+	function makeElementShortText(obj) {
+		var element = document.createElement('lable');
+		element.classList.add('lable');
+		var nodeTextLable = document.createTextNode(obj.label);
+		var nodeElement = document.createElement('input');
+		nodeElement.setAttribute('type', 'text');
+		nodeElement.setAttribute('name', obj.name);
+		nodeElement.setAttribute('placeholder', obj.label);
+		nodeElement.classList.add('input');
+		nodeElement.classList.add('inputShort');
 
+		element.appendChild(nodeTextLable);
+		element.appendChild(nodeElement);
+		return element;
+	}
+	function makeElementCombo(obj) {
+		var element = document.createElement('lable');
+		element.classList.add('lable');
+		var nodeTextLable = document.createTextNode(obj.label);
+		var nodeElement = document.createElement('select');
+		nodeElement.setAttribute('size', '1');
+		nodeElement.setAttribute('name', obj.name);
+		nodeElement.classList.add('input');
+		nodeElement.classList.add('inputShort');
+		obj.variants.forEach(function (itemObj) {
+			nodeElement.appendChild(createOption(itemObj));
+		});
 
+		element.appendChild(nodeTextLable);
+		element.appendChild(nodeElement);
 
-	
-	
-	console.log(form);
+		function createOption(obj) {
+			var option = document.createElement('option');
+			option.setAttribute('value', obj.value);
+			var textNode = document.createTextNode(obj.text);
+			option.appendChild(textNode);
+			return option;
+		}
+
+		return element;
+	}
+	function makeElementRadio(obj) {
+		var element = document.createElement('div');
+		element.classList.add('lable');
+		var nodeTextLable = document.createTextNode(obj.label);
+		var nodeElement = document.createElement('lable');
+		nodeElement.classList.add('input');
+		obj.variants.forEach(function (itemObj) {
+			nodeElement.appendChild(createOption(itemObj, obj.name));
+		});
+
+		element.appendChild(nodeTextLable);
+		element.appendChild(nodeElement);
+
+		function createOption(obj, nameRadio) {
+			var lableOption = document.createElement('lable');
+			var textNode = document.createTextNode(obj.text);
+			var inputRadio = document.createElement('input');
+			inputRadio.setAttribute('value', obj.value);
+			inputRadio.setAttribute('name', nameRadio);
+			inputRadio.setAttribute('type', 'radio');
+			lableOption.appendChild(inputRadio);
+			lableOption.appendChild(textNode);
+			return lableOption;
+		}
+		return element;
+	}
+	function makeElementCheck(obj) {
+		var element = document.createElement('lable');
+		element.classList.add('lable');
+		var nodeTextLable = document.createTextNode(obj.label);
+		var nodeElement = document.createElement('input');
+		nodeElement.setAttribute('type', 'checkbox');
+		nodeElement.setAttribute('name', obj.name);
+		nodeElement.setAttribute('checked', '');
+		nodeElement.classList.add('input');
+
+		element.appendChild(nodeTextLable);
+		element.appendChild(nodeElement);
+		return element;
+	}
+	function makeElementMemo(obj) {
+		var element = document.createElement('lable');
+		element.classList.add('lable');
+		var nodeTextLable = document.createTextNode(obj.label + '\n');
+		var nodeElement = document.createElement('textarea');
+		nodeElement.setAttribute('name', obj.name);
+		nodeElement.setAttribute('placeholder', obj.label);
+		nodeElement.classList.add('inputTextarea');
+		//nodeElement.classList.add('inputLong');
+
+		element.appendChild(nodeTextLable);
+		element.appendChild(nodeElement);
+		return element;
+	}
+
 	return form;
 }
