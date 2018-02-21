@@ -85,6 +85,14 @@ function createForm(action, arr, name = 'formInfo') {
 
 		element.appendChild(nodeTextLable);
 		element.appendChild(nodeElement);
+		
+		var nodeElementSpan = document.createElement('span');
+		nodeElementSpan.classList.add('error');
+		var nodeTextError = document.createTextNode('Корректно введите значение');
+		
+		nodeElementSpan.appendChild(nodeTextError);
+		element.appendChild(nodeElementSpan);
+		
 		return element;
 	}
 

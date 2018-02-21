@@ -21,3 +21,9 @@
     width: 620px;
     height: 50px;
 }
+.error{
+    position: absolute;
+    left: 640px;
+    color: red;
+    font-size: 13px;
+}
