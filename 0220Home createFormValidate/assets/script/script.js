@@ -1,22 +1,24 @@
 var formDef1 =
 	[
-		{label: 'Название сайта:', kind: 'longtext', name: 'sitename'},
-		{label: 'URL сайта:', kind: 'longtext', name: 'siteurl'},
-		{label: 'Посетителей в сутки:', kind: 'number', name: 'visitors'},
-		{label: 'E-mail для связи:', kind: 'shorttext', name: 'email'},
+		{label: 'Название сайта:', kind: 'longtext', name: 'sitename', validate: ['required']},
+		{label: 'URL сайта:', kind: 'longtext', name: 'siteurl', validate: ['required', 'url']},
+		{label: 'Посетителей в сутки:', kind: 'number', name: 'visitors', validate: ['required']},
+		{label: 'E-mail для связи:', kind: 'shorttext', name: 'email', validate: ['required', 'mail']},
 		{
 			label: 'Рубрика каталога:', kind: 'combo', name: 'division',
 			variants: [{text: 'здоровье', value: 1}, {text: 'домашний уют', value: 2}, {
-				text: 'бытовая техника',
-				value: 3
-			}]
+				text: 'бытовая техника', value: 3
+			}], validate: ['required']
 		},
 		{
-			label: 'Размещение:', kind: 'radio', name: 'payment',
-			variants: [{text: 'бесплатное', value: 1}, {text: 'платное', value: 2}, {text: 'VIP', value: 3}]
+			label: 'Размещение:',
+			kind: 'radio',
+			name: 'payment',
+			variants: [{text: 'бесплатное', value: 1}, {text: 'платное', value: 2}, {text: 'VIP', value: 3}],
+			validate: ['radio']
 		},
-		{label: 'Разрешить отзывы:', kind: 'check', name: 'votes'},
-		{label: 'Описание сайта:', kind: 'memo', name: 'description'},
+		{label: 'Разрешить отзывы:', kind: 'check', name: 'votes', validate: ['check']},
+		{label: 'Описание сайта:', kind: 'memo', name: 'description', validate: ['required']},
 		{label: 'Опубликовать:', kind: 'submit'},
 	];
 
@@ -42,6 +44,7 @@ function createForm(action, arr, name = 'formInfo') {
 	form.setAttribute('name', name);
 	form.setAttribute('target', '_blank');
 	form.setAttribute('method', 'post');
+	form.setAttribute('novalidate', '');
 
 	arr.forEach(function (objectProp) {
 		switch (objectProp.kind) {
@@ -80,19 +83,16 @@ function createForm(action, arr, name = 'formInfo') {
 		nodeElement.setAttribute('type', 'text');
 		nodeElement.setAttribute('name', obj.name);
 		nodeElement.setAttribute('placeholder', obj.label);
+		nodeElement.setAttribute('data-valid', obj.validate);
+		nodeElement.setAttribute('data-submit', '');
 		nodeElement.classList.add('input');
 		nodeElement.classList.add('inputLong');
 
 		element.appendChild(nodeTextLable);
 		element.appendChild(nodeElement);
-		
-		var nodeElementSpan = document.createElement('span');
-		nodeElementSpan.classList.add('error');
-		var nodeTextError = document.createTextNode('Корректно введите значение');
-		
-		nodeElementSpan.appendChild(nodeTextError);
-		element.appendChild(nodeElementSpan);
-		
+
+		element.appendChild(createElementError('errorL', 'Корректно введите значение'));
+
 		return element;
 	}
 
@@ -104,11 +104,16 @@ function createForm(action, arr, name = 'formInfo') {
 		nodeElement.setAttribute('type', 'number');
 		nodeElement.setAttribute('name', obj.name);
 		nodeElement.setAttribute('placeholder', obj.label);
+		nodeElement.setAttribute('data-valid', obj.validate);
+		nodeElement.setAttribute('data-submit', '');
 		nodeElement.classList.add('input');
 		nodeElement.classList.add('inputSmall');
 
 		element.appendChild(nodeTextLable);
 		element.appendChild(nodeElement);
+
+		element.appendChild(createElementError('errorS', 'Укажите число'));
+
 		return element;
 	}
 
@@ -131,11 +136,16 @@ function createForm(action, arr, name = 'formInfo') {
 		nodeElement.setAttribute('type', 'text');
 		nodeElement.setAttribute('name', obj.name);
 		nodeElement.setAttribute('placeholder', obj.label);
+		nodeElement.setAttribute('data-valid', obj.validate);
+		nodeElement.setAttribute('data-submit', '');
 		nodeElement.classList.add('input');
 		nodeElement.classList.add('inputShort');
 
 		element.appendChild(nodeTextLable);
 		element.appendChild(nodeElement);
+
+		element.appendChild(createElementError('errorS', 'Корректно введите значение'));
+
 		return element;
 	}
 
@@ -146,6 +156,8 @@ function createForm(action, arr, name = 'formInfo') {
 		var nodeElement = document.createElement('select');
 		nodeElement.setAttribute('size', '1');
 		nodeElement.setAttribute('name', obj.name);
+		nodeElement.setAttribute('data-valid', obj.validate);
+		nodeElement.setAttribute('data-submit', '');
 		nodeElement.classList.add('input');
 		nodeElement.classList.add('inputShort');
 		obj.variants.forEach(function (itemObj) {
@@ -154,6 +166,8 @@ function createForm(action, arr, name = 'formInfo') {
 
 		element.appendChild(nodeTextLable);
 		element.appendChild(nodeElement);
+
+		element.appendChild(createElementError('errorS', 'Выберите значение'));
 
 		function createOption(obj) {
 			var option = document.createElement('option');
@@ -179,6 +193,13 @@ function createForm(action, arr, name = 'formInfo') {
 		element.appendChild(nodeTextLable);
 		element.appendChild(nodeElement);
 
+		var nodeElementSpan = document.createElement('span');
+		nodeElementSpan.classList.add('errorS');
+		nodeElementSpan.setAttribute('id', obj.name);
+		var nodeTextError = document.createTextNode('Выберите значение');
+		nodeElementSpan.appendChild(nodeTextError);
+		element.appendChild(nodeElementSpan);
+
 		function createOption(obj, nameRadio) {
 			var lableOption = document.createElement('lable');
 			var textNode = document.createTextNode(obj.text);
@@ -202,10 +223,15 @@ function createForm(action, arr, name = 'formInfo') {
 		nodeElement.setAttribute('type', 'checkbox');
 		nodeElement.setAttribute('name', obj.name);
 		nodeElement.setAttribute('checked', '');
+		nodeElement.setAttribute('data-valid', obj.validate);
+		nodeElement.setAttribute('data-submit', '');
 		nodeElement.classList.add('input');
 
 		element.appendChild(nodeTextLable);
 		element.appendChild(nodeElement);
+
+		element.appendChild(createElementError('errorS', 'Укажите опцию'));
+
 		return element;
 	}
 
@@ -216,12 +242,24 @@ function createForm(action, arr, name = 'formInfo') {
 		var nodeElement = document.createElement('textarea');
 		nodeElement.setAttribute('name', obj.name);
 		nodeElement.setAttribute('placeholder', obj.label);
+		nodeElement.setAttribute('data-valid', obj.validate);
+		nodeElement.setAttribute('data-submit', '');
 		nodeElement.classList.add('inputTextarea');
-		//nodeElement.classList.add('inputLong');
 
 		element.appendChild(nodeTextLable);
 		element.appendChild(nodeElement);
+
+		element.appendChild(createElementError('errorL', 'Корректно введите значение'));
+
 		return element;
+	}
+
+	function createElementError(style, text) {
+		var nodeElementSpan = document.createElement('span');
+		nodeElementSpan.classList.add(style);
+		var nodeTextError = document.createTextNode(text);
+		nodeElementSpan.appendChild(nodeTextError);
+		return nodeElementSpan;
 	}
 
 	return form;
@@ -229,24 +267,92 @@ function createForm(action, arr, name = 'formInfo') {
 
 var formTag = document.forms.formInfo;
 formTag.addEventListener('blur', addError, true);
+formTag.addEventListener('focus', checkError, true);
+formTag.addEventListener('submit', checkSubmit);
 
+var checkFlag = false;
 
 function addError(event) {
+	var flag = false;
 	var elem = event.target;
-	if ( validateElementForm(elem) ) {
-		elem.parentNode.appendChild(document.createTextNode('Error'));
-		console.log('errr');
+	if ( elem.name === 'payment' ) {
+		validateRadio();
+		return;
+	}
+	var validArray = elem.getAttribute('data-valid').split(',');
+	for ( var i = 0; i < validArray.length; i++ ) {
+		if ( objFunction[validArray[i]].call(null, elem, event) ) {
+			console.log('error');
+			flag = true;
+			break;
+		}
+	}
+	if ( flag ) {
+		checkFlag = true;
+		elem.nextSibling.classList.add("errorVisib");
 	}
 }
 
-function validateElementForm(elem) {
+function checkError(event) {
+	var elem = event.target;
+	if ( elem.name === 'payment' ) {
+		if ( payment.classList.contains("errorVisib") ) {
+			payment.classList.remove("errorVisib");
+		}
+		return;
+	}
+	if ( elem.nextSibling.classList.contains("errorVisib") ) {
+		elem.nextSibling.classList.remove("errorVisib");
+	}
+}
 
+var objFunction = {required: validateRequired, url: validateUrl, mail: validateMail, check: validateCheck};
+
+function validateRequired(elem) {
 	if ( !elem.value ) {
 		return true;
 	}
 	return false;
-	console.log(elem);
 }
 
+function validateUrl(elem) {
+	var value = elem.value;
+	var reg = /(http|https)\:\/\//;
+	return !(reg.test(value));
+}
 
-//console.log(formTag);
+function validateMail(elem) {
+	var value = elem.value;
+	var reg = /.+@.+\./;
+	return !(reg.test(value));
+}
+
+function validateCheck(elem) {
+	if ( elem.checked ) {
+		return false;
+	}
+	return true;
+}
+
+function validateRadio() {
+	var form = document.forms.formInfo;
+	var arr = form.querySelectorAll("[name = 'payment']:checked");
+	if ( arr.length === 0 ) {
+		payment.classList.add('errorVisib');
+		checkFlag = true;
+	}
+}
+
+var arrElementsInput = formTag.querySelectorAll('[data-submit]');
+
+function checkSubmit(event) {
+	checkFlag = false;
+	validateRadio();
+	arrElementsInput.forEach(function (item) {
+		item.focus();
+		item.blur();
+	});
+	if ( checkFlag ) {
+		event.preventDefault();
+	}
+}

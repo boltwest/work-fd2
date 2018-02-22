@@ -21,9 +21,22 @@
     width: 620px;
     height: 50px;
 }
-.error{
+.errorL{
     position: absolute;
     left: 640px;
+    top: 0;
     color: red;
     font-size: 13px;
+    display: none;
+}
+.errorS{
+    position: absolute;
+    left: 440px;
+    top: 0;
+    color: red;
+    font-size: 13px;
+    display: none;
+}
+.errorVisib{
+    display: block;
 }
