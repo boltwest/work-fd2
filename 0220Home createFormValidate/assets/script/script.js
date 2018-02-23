@@ -282,7 +282,6 @@ function addError(event) {
 	var validArray = elem.getAttribute('data-valid').split(',');
 	for ( var i = 0; i < validArray.length; i++ ) {
 		if ( objFunction[validArray[i]].call(null, elem, event) ) {
-			console.log('error');
 			flag = true;
 			break;
 		}
@@ -309,10 +308,7 @@ function checkError(event) {
 var objFunction = {required: validateRequired, url: validateUrl, mail: validateMail, check: validateCheck};
 
 function validateRequired(elem) {
-	if ( !elem.value ) {
-		return true;
-	}
-	return false;
+	return !elem.value;
 }
 
 function validateUrl(elem) {
@@ -328,10 +324,7 @@ function validateMail(elem) {
 }
 
 function validateCheck(elem) {
-	if ( elem.checked ) {
-		return false;
-	}
-	return true;
+	return !elem.checked;
 }
 
 function validateRadio() {
@@ -354,5 +347,7 @@ function checkSubmit(event) {
 	});
 	if ( checkFlag ) {
 		event.preventDefault();
+		//var elem = formTag.querySelector([class="errorVisib"]);
+		//console.log(elem);
 	}
 }
