@@ -1,0 +1,41 @@
+.clockField {
+    width: 200px;
+    height: 200px;
+    background: #ffb237;
+    border-radius: 50%;
+    position: relative;
+    margin: 20px;
+}
+
+.arrowHourClock, .arrowMinuteClock, .arrowSecondsClock {
+    background: #000;
+    transform-origin: 10px 50%;
+    position: absolute;
+    left: calc(50% - 10px);
+
+}
+
+.arrowHourClock {
+    width: 60px;
+    height: 8px;
+    border-radius: 4px;
+    top: calc(50% - 4px);
+}
+
+.arrowMinuteClock {
+    width: 90px;
+    height: 6px;
+    border-radius: 3px;
+    top: calc(50% - 3px);
+}
+
+.arrowSecondsClock {
+    width: 100px;
+    height: 2px;
+    border-radius: 1px;
+    top: calc(50% - 1px);
+}
+
+.seconds:hover {
+    transform: rotate(90deg);
+}
