@@ -5,7 +5,7 @@
 
 function TimeModel(gmt) {
 	this.arrowPosHour = -10;
-	this.arrowPosMinute = -120;
+	this.arrowPosMinute = -110;
 	this.arrowPosSecond = -90;
 
 	this.arrowPosMinuteBegin = 0;
